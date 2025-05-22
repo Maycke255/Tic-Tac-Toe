@@ -9,9 +9,9 @@
 
     <link rel="icon" href="icons/favicon.png" type="image/png">
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Comic+Neue:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Sour+Gummy:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -25,6 +25,47 @@
     <header>
         <h1>Jogo da velha JS (Tic-Tac-Toe)</h1>
     </header>
+
+    <main>
+        <section class="scoreboard">
+            <article>
+                <p>sObservação: O jogador 1 sempre começara primeiro.</p>
+            </article>
+            <div class="players">
+                <label for="name-player">Jogador 1</label>
+                <input type="text" name="name-player" id="name-player-one" class="name-player" placeholder="digite o nome do primeiro jogador...">
+                <label for="name-player">Jogador 2</label>
+                <input type="text" name="name-player" id="name-player-two" class="name-player" placeholder="digite o nome do segundo jogador...">
+                <span>
+                    <button type="button" class="add-players">Adicionar Jogadores</button>
+                </span>
+            </div>
+            <div class="scoreboard-main">
+                <div id="player-score-one"></div>
+                <span class="versus"><img src="icons/versus.png" alt="Imagem de VS que vai ficar no meio dos dois jogadores"></span>
+                <div id="player-score-two"></div>
+                <div>
+                    <button type="reset" id="reset-scoreboard-btn">Resetar Placar</button>
+                </div>
+            </div>
+        </section>
+        <section class="game-container">
+            <div>
+                <button type="reset" id="reset-game-btn">Restart</button>
+            </div>
+            <div class="game-grid">
+                <div class="cell" data-cell="0"></div>
+                <div class="cell" data-cell="1"></div>
+                <div class="cell" data-cell="2"></div>
+                <div class="cell" data-cell="3"></div>
+                <div class="cell" data-cell="4"></div>
+                <div class="cell" data-cell="5"></div>
+                <div class="cell" data-cell="6"></div>
+                <div class="cell" data-cell="7"></div>
+                <div class="cell" data-cell="8"></div>
+            </div>
+        </section>
+    </main>
 
     <div>
         <script src="JS/TicTacToe.js"></script>

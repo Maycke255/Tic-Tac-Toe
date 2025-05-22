@@ -1,10 +1,46 @@
 :root {
     --font-primary: "Inter", sans-serif;
+    --font-secondary: "Sour Gummy", sans-serif;
+    --font-tertiary: "Comic Neue", cursive;
+    --color-bg-primary:#191a19;
+    --color-bg-secondary:#e5f0e6;; 
+    --color-font-primary:#e5f0e6;
+    --color-font-secondary: #191a19;
+    --color-title: linear-gradient(165deg, #ff0000, #ff7300, #fffb00, #48ff00);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 body {
+    background: var(--color-bg-primary);
     font-family: var(--font-primary);
     font-optical-sizing: auto;
-    font-weight: weight;
     font-style: normal;
+    color: var(--color-font-primary);
+    text-align: center;
+}
+
+header {
+    padding: 2rem;
+    width: 100%;
+}
+
+h1 {
+    font-family: var(--font-secondary);
+    font-weight: 800;
+    font-size: 2.75rem;
+    font-optical-sizing: auto;
+    background: var(--color-title);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3), 0 0 10px rgba(240, 167, 167, 0.5);
+}
+
+.scoreboard  p {
+    padding: 1.5rem;
 }
