@@ -29,6 +29,13 @@ header {
     width: 100%;
 }
 
+.background {
+    fill: rgb(252, 0, 0);
+    width: 518.307px;
+    height: 265.146px;
+    flex-shrink: 0;
+}
+
 h1 {
     font-family: var(--font-secondary);
     font-weight: 800;
@@ -41,6 +48,27 @@ h1 {
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3), 0 0 10px rgba(240, 167, 167, 0.5);
 }
 
+.scoreboard {
+    text-shadow: 0 2px 5px rgba(48, 12, 4, 0.3), 0 0 5px rgba(255, 238, 0, 0.774);
+}
+
+.scoreboard article {
+    padding: 2rem;
+}
+
 .scoreboard  p {
-    padding: 1.5rem;
+
+    padding-left: 0;
+    display: inline;
+    color: #f5750c;
+}
+
+.scoreboard  h3 {
+    background:  linear-gradient(to right, #ff0000, #ffa601);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    font-family: var(--font-tertiary);
+    padding-right: 0;
+    display: inline;
 }
