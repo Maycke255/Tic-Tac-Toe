@@ -9,9 +9,9 @@
 
     <link rel="icon" href="icons/favicon.png" type="image/png">
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Comic+Neue:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Sour+Gummy:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Sour+Gummy:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -23,8 +23,18 @@
 <body>
     
     <header>
-        <div class="background"></div>
         <h1>Jogo da velha JS (Tic-Tac-Toe)</h1>
+        <div class="background">
+            <svg class="wave wave-blue" viewBox="0 0 425 200" preserveAspectRatio="none">
+            <path d="M323.841 200C236.074 200 221.712 174 120 174C18.2878 174 -4.35084e-06 0.85289 -4.35084e-06 0.85289L-4.10808e-06 0L425 0C425 0 411.608 200 323.841 200Z" fill="#6C60FF"/>
+            </svg>
+            <svg class="wave wave-red" viewBox="0 0 424 200" preserveAspectRatio="none">
+                <path d="M333.5 111.351C245.622 141.931 212.111 262.267 127 158.805C41.8894 55.3421 -1.00005 146.274 -1.00005 146.274L-1 0L424 0L424 168.796C424 168.796 421.378 80.7712 333.5 111.351Z" fill="#FF5B5B"/>
+            </svg>
+            <svg class="wave wave-orange" viewBox="0 0 425 200" preserveAspectRatio="none">
+                <path d="M425 0.39859C425 0.39859 413.644 96.5 257 96.5C100.356 96.5 -1 200 -1 200L-1 0L425 0L425 0.39859Z" fill="#FFB661"/>
+            </svg>
+        </div>
     </header>
 
     <main>
@@ -34,17 +44,21 @@
                 <p>O jogador 1 sempre começara primeiro.</p>
             </article>
             <div class="players">
-                <label for="name-player">Jogador 1</label>
-                <input type="text" name="name-player" id="name-player-one" class="name-player" placeholder="digite o nome do primeiro jogador...">
-                <label for="name-player">Jogador 2</label>
-                <input type="text" name="name-player" id="name-player-two" class="name-player" placeholder="digite o nome do segundo jogador...">
+                <div>
+                    <label for="name-player">Jogador 1</label>
+                    <input type="text" name="name-player" id="name-player-one" class="name-player" placeholder="digite o nome do primeiro jogador...">
+                </div>
+                <div>
+                    <label for="name-player">Jogador 2</label>
+                    <input type="text" name="name-player" id="name-player-two" class="name-player" placeholder="digite o nome do segundo jogador...">
+                </div>
                 <span>
-                    <button type="button" class="add-players">Adicionar Jogadores</button>
+                    <button type="button" class="add-players" aria-hidden="true" data-text="Adicionar Jogadores">Adicionar Jogadores</button>
                 </span>
             </div>
             <div class="scoreboard-main">
                 <div id="player-score-one"></div>
-                <span class="versus"><img src="icons/versus.png" alt="Imagem de VS que vai ficar no meio dos dois jogadores"></span>
+                <span><img class="versus" src="icons/versus.png" alt="Imagem de VS que vai ficar no meio dos dois jogadores"></span>
                 <div id="player-score-two"></div>
                 <div>
                     <button type="reset" id="reset-scoreboard-btn">Resetar Placar</button>
