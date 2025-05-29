@@ -17,6 +17,10 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Asul:wght@400;700&display=swap" rel="stylesheet">
+
     <title>Tic Tac Toe</title>
 </head>
 
@@ -40,29 +44,38 @@
     <main>
         <section class="scoreboard">
             <article>
-                <h3>Observação: </h5>
+                <h3>Observação: </h3>
                 <p>O jogador 1 sempre começara primeiro.</p>
             </article>
             <div class="players">
-                <div>
-                    <label for="name-player">Jogador 1</label>
-                    <input type="text" name="name-player" id="name-player-one" class="name-player" placeholder="digite o nome do primeiro jogador...">
+                <div class="input-container">
+                    <label for="name-player">Jogador X</label>
+                    <input type="text" id="name-player-one" class="dynamic-input" placeholder=" ">
                 </div>
-                <div>
-                    <label for="name-player">Jogador 2</label>
-                    <input type="text" name="name-player" id="name-player-two" class="name-player" placeholder="digite o nome do segundo jogador...">
+                <div class="input-container">
+                    <label for="name-player">Jogador O</label>
+                    <input type="text" id="name-player-two" class="dynamic-input" placeholder=" ">
                 </div>
                 <span>
                     <button type="button" class="add-players" aria-hidden="true" data-text="Adicionar Jogadores">Adicionar Jogadores</button>
                 </span>
             </div>
             <div class="scoreboard-main">
-                <div id="player-score-one"></div>
-                <span><img class="versus" src="icons/versus.png" alt="Imagem de VS que vai ficar no meio dos dois jogadores"></span>
-                <div id="player-score-two"></div>
-                <div>
-                    <button type="reset" id="reset-scoreboard-btn">Resetar Placar</button>
+                <div class="section-one">
+                    <input type="text" class="player-one" disabled>
+                    <input type="text" class="score-player-one" disabled>
                 </div>
+                
+                <span><img class="versus" src="icons/versus.png" alt="Imagem de VS que vai ficar no meio dos dois jogadores"></span>
+                
+                <div class="section-two">
+                    <input type="text" class="score-player-two" value="50 wins" disabled>
+                    <input type="text" class="player-two" value="Maycke" disabled>
+                </div>
+            </section>
+            <div class="config-players">
+                <button type="button" id="choose-new-players">Escolher novos jogadores</button>
+                <button type="reset" id="reset-scoreboard-btn">Resetar placar</button>
             </div>
         </section>
         <section class="game-container">
