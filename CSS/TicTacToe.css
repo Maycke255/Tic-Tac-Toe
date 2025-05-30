@@ -2,7 +2,7 @@
     --font-primary: "Inter", sans-serif;
     --font-secondary: "Sour Gummy", sans-serif;
     --font-tertiary: "Comic Neue", cursive;
-    --font-number: "Asul", serif;
+    --font-number: "Mynerve", cursive;
     --color-bg-primary:#191a19;
     --color-bg-secondary:#e5f0e6;; 
     --color-font-primary:#e5f0e6;
@@ -26,6 +26,7 @@ body {
     font-style: normal;
     color: var(--color-font-primary);
     text-align: center;
+
 }
 
 header {
@@ -261,9 +262,25 @@ h1 {
 
 .player-one, .player-two {
     font-family: var(--font-secondary);
+    color: var(--color-title);
+    text-shadow: 0 4px 5px  #333203;
     text-align: center;
-    background: #808080;
+    font-size: 1.5rem;
+    width: 12.5rem;
+    height: 3.3rem;
+    background: linear-gradient(to bottom, #33300165 20%, #e0cb11 100%);
+    box-shadow: 0 0 12px  #d4d104;
+    border: 2px solid #fff;
+    border-bottom: 0;
+    border-radius: 2rem 2rem 0 0;
+}
+
+.score-player-one, .score-player-two {
+    font-family: var(--font-number);
     color: var(--color-primary-btn);
+    text-align: center;
+    background: radial-gradient(circle at center, #0b630eb6 0%, #010c01b6 100%);
+    box-shadow: 0 0 12px  #d4d104;
     width: 12.5rem;
     height: 6.5rem;
     font-size: 2rem;
@@ -271,30 +288,6 @@ h1 {
     border-top: 0;
     border-radius: 0 0 2rem 2rem;
     display: block;
-}
-
-.player-one {
-    border: 2px solid #fff;
-    border-bottom: 0;
-    border-radius: 2rem 2rem 0 0 ;
-}
-
-.score-player-one, .score-player-two {
-    font-family: var(--font-number);
-    color: var(--color-primary-btn);
-    text-align: center;
-    font-size: 1.5rem;
-    width: 12.5rem;
-    height: 3.3rem;
-    border: 2px solid #fff;
-    border-bottom: 0;
-    border-radius: 2rem 2rem 0 0;
-}
-
-.score-player-one {
-    border: 2px solid #fff;
-    border-top: 0;
-    border-radius: 0rem 0rem 2rem 2rem;
 }
 
 .versus {
@@ -307,4 +300,17 @@ h1 {
 @keyframes float {
     0%, 100% { transform: translateY(0); }
     50% { transform: translateY(-20px); }
+}
+
+.game-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(60px, 1fr));
+    grid-template-rows: repeat(3, minmax(60px, 1fr));
+    width: 200px;
+    height: 200px;
+}
+
+.cell {
+    background: #ff0000;
+    border: 1px solid #fff;
 }
