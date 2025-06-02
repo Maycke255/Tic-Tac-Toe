@@ -30,10 +30,10 @@ body {
 }
 
 header {
-  position: relative;
-  padding: 20px 16px;
-  text-align: center;
-  overflow: hidden;
+    position: relative;
+    padding: 20px 16px;
+    text-align: center;
+    overflow: hidden;
 }
 
 h1 {
@@ -302,15 +302,141 @@ h1 {
     50% { transform: translateY(-20px); }
 }
 
+.game-container {
+    justify-items: center;
+}
+
 .game-grid {
     display: grid;
-    grid-template-columns: repeat(3, minmax(60px, 1fr));
-    grid-template-rows: repeat(3, minmax(60px, 1fr));
-    width: 200px;
-    height: 200px;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    width: 22rem;
+    height: 22rem;
+    margin-bottom: 5rem;
 }
 
 .cell {
-    background: #ff0000;
-    border: 1px solid #fff;
+    background: transparent;
+    position: relative;
+    border: 3.5px solid transparent;
+}
+
+/* Efeito RGB apenas nas bordas visíveis */
+.cell::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border: 3.5px solid;
+    border-image: linear-gradient(45deg, 
+        #ff0000, #ff7700, #ffdd00, 
+        #00ff00, #0000ff, #ff00ff) 1;
+    animation: rgbBorder 3s linear infinite;
+    z-index: -1;
+}
+
+/* Ajustes específicos para cada célula */
+.cell-0::after {
+    border-top: none;
+    border-left: none;
+}
+
+.cell-1::after {
+    border-top: none;
+}
+
+.cell-2::after {
+    border-top: none;
+    border-right: none;
+}
+
+.cell-3::after {
+    border-left: none;
+}
+
+.cell-5::after {
+    border-right: none;
+}
+
+.cell-6::after {
+    border-left: none;
+    border-bottom: none;
+}
+
+.cell-7::after {
+    border-bottom: none;
+}
+
+.cell-8::after {
+    border-right: none;
+    border-bottom: none;
+}
+
+/* Animação do gradiente RGB */
+@keyframes rgbBorder {
+    0% {
+        border-image-source: linear-gradient(45deg, 
+            #ff0000, #ff7700, #ffdd00, 
+            #00ff00, #0000ff, #ff00ff);
+    }
+    100% {
+        border-image-source: linear-gradient(45deg, 
+            #ff00ff, #ff0000, #ff7700, 
+            #ffdd00, #00ff00, #0000ff);
+    }
+}
+
+/* Efeito de sombra apenas nas bordas */
+.cell::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    animation: rgbShadow 3s linear infinite;
+    z-index: -2;
+}
+
+/* Ajustes de sombra para cada célula (apenas nas bordas visíveis) */
+.cell-0::before {
+    border-top: none;
+    border-left: none;
+    box-shadow: 
+        3.5px 3.5px 10px rgba(255, 0, 0, 0.7),
+        -3.5px -3.5px 10px rgba(0, 255, 0, 0.5);
+}
+
+.cell-1::before {
+    border-top: none;
+    box-shadow: 
+        0 3.5px 10px rgba(255, 0, 0, 0.7),
+        0 -3.5px 10px rgba(0, 255, 0, 0.5);
+}
+
+/* ... (continuar com os ajustes específicos para cada célula) */
+
+@keyframes rgbShadow {
+    0% {
+        box-shadow: 
+            0 0 10px rgba(255, 0, 0, 0.7),
+            0 0 20px rgba(0, 255, 0, 0.5);
+    }
+    33% {
+        box-shadow: 
+            0 0 10px rgba(0, 255, 0, 0.7),
+            0 0 20px rgba(0, 0, 255, 0.5);
+    }
+    66% {
+        box-shadow: 
+            0 0 10px rgba(0, 0, 255, 0.7),
+            0 0 20px rgba(255, 0, 0, 0.5);
+    }
+    100% {
+        box-shadow: 
+            0 0 10px rgba(255, 0, 0, 0.7),
+            0 0 20px rgba(0, 255, 0, 0.5);
+    }
 }
