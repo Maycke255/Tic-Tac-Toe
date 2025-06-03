@@ -12,6 +12,7 @@
     --color-orange: #f5750c;
     --color-red: #ff0000;
     --color-primary-btn: rgba(255, 251, 0, 0.9);
+    --color-secondary-btn: rgb(255, 0, 106);
 }
 * {
     box-sizing: border-box;
@@ -30,10 +31,10 @@ body {
 }
 
 header {
-    position: relative;
-    padding: 20px 16px;
-    text-align: center;
-    overflow: hidden;
+  position: relative;
+  padding: 20px 16px;
+  text-align: center;
+  overflow: hidden;
 }
 
 h1 {
@@ -302,6 +303,7 @@ h1 {
     50% { transform: translateY(-20px); }
 }
 
+
 .game-container {
     justify-items: center;
 }
@@ -318,10 +320,9 @@ h1 {
 .cell {
     background: transparent;
     position: relative;
-    border: 3.5px solid transparent;
+    border: 4px solid transparent;
 }
 
-/* Efeito RGB apenas nas bordas visíveis */
 .cell::after {
     content: '';
     position: absolute;
@@ -329,66 +330,41 @@ h1 {
     left: 0;
     right: 0;
     bottom: 0;
-    border: 3.5px solid;
+    border: 3.8px solid;
     border-image: linear-gradient(45deg, 
         #ff0000, #ff7700, #ffdd00, 
         #00ff00, #0000ff, #ff00ff) 1;
-    animation: rgbBorder 3s linear infinite;
+    animation: rgbBorder 7s linear infinite;
     z-index: -1;
 }
 
-/* Ajustes específicos para cada célula */
-.cell-0::after {
-    border-top: none;
-    border-left: none;
-}
-
-.cell-1::after {
-    border-top: none;
-}
-
-.cell-2::after {
-    border-top: none;
-    border-right: none;
-}
-
-.cell-3::after {
-    border-left: none;
-}
-
-.cell-5::after {
-    border-right: none;
-}
-
-.cell-6::after {
-    border-left: none;
-    border-bottom: none;
-}
-
-.cell-7::after {
-    border-bottom: none;
-}
-
-.cell-8::after {
-    border-right: none;
-    border-bottom: none;
-}
-
-/* Animação do gradiente RGB */
 @keyframes rgbBorder {
     0% {
-        border-image-source: linear-gradient(45deg, 
-            #ff0000, #ff7700, #ffdd00, 
-            #00ff00, #0000ff, #ff00ff);
+        border-image-source: linear-gradient(45deg,rgb(255, 0, 0),
+        rgb(0, 255, 0));
     }
+
+    25% {
+        border-image-source: linear-gradient(45deg, rgb(0, 255, 0),
+        rgb(0, 0, 255));
+    }
+
+    50% {
+        border-image-source: linear-gradient(45deg, rgb(0, 0, 255),
+        rgb(255, 0, 0));
+    }
+
+    75% {
+        border-image-source: linear-gradient(45deg, rgb(255, 0, 234),
+        rgb(255, 174, 0));
+    }
+
     100% {
-        border-image-source: linear-gradient(45deg, 
-            #ff00ff, #ff0000, #ff7700, 
-            #ffdd00, #00ff00, #0000ff);
+        border-image-source: linear-gradient(45deg,rgb(255, 0, 0),
+        rgb(0, 255, 0));
     }
 }
 
-/* Efeito de sombra apenas nas bordas */
 .cell::before {
     content: '';
     position: absolute;
@@ -396,27 +372,10 @@ h1 {
     left: 0;
     right: 0;
     bottom: 0;
-    animation: rgbShadow 3s linear infinite;
+    animation: rgbShadow 7s linear infinite;
+    overflow: hidden;
     z-index: -2;
 }
-
-/* Ajustes de sombra para cada célula (apenas nas bordas visíveis) */
-.cell-0::before {
-    border-top: none;
-    border-left: none;
-    box-shadow: 
-        3.5px 3.5px 10px rgba(255, 0, 0, 0.7),
-        -3.5px -3.5px 10px rgba(0, 255, 0, 0.5);
-}
-
-.cell-1::before {
-    border-top: none;
-    box-shadow: 
-        0 3.5px 10px rgba(255, 0, 0, 0.7),
-        0 -3.5px 10px rgba(0, 255, 0, 0.5);
-}
-
-/* ... (continuar com os ajustes específicos para cada célula) */
 
 @keyframes rgbShadow {
     0% {
@@ -439,4 +398,121 @@ h1 {
             0 0 10px rgba(255, 0, 0, 0.7),
             0 0 20px rgba(0, 255, 0, 0.5);
     }
+}
+
+.reset-btn {
+    position: relative;
+    font-family: var(--font-tertiary);
+    font-size: 1rem;
+    font-weight: 800;
+    background: hsl(0, 0%, 9%);
+    color: var(--color-bg-btn);
+    letter-spacing: .75px;
+    padding: .75rem 1.25rem;
+    border-radius: 1rem;
+    border: 4px solid var(--color-bg-btn);
+    margin: 2rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    overflow: hidden;
+    z-index: 1;
+    --glow-x: 50%;
+    --glow-y: 50%;
+}
+
+.reset-btn::after {
+    content: '';
+    position: absolute;
+    top: -15px;  /* Extrapola o tamanho do botão */
+    left: -15px;
+    right: -15px;
+    bottom: -15px;
+    border-radius: 1.25rem; /* Borda maior que a do botão */
+    background: radial-gradient(
+        circle at var(--glow-x) var(--glow-y),
+        rgba(255, 251, 0, 0.7) 0%,
+        transparent 70%
+    );
+    opacity: 0;
+    z-index: -1;
+    pointer-events: none;
+    transition: opacity 0.4s, transform 0.4s;
+}
+
+.reset-btn:hover::after {
+    opacity: 1;
+    transform: scale(1.05);
+}
+
+.reset-btn:hover {
+    box-shadow: 0 0 15px 5px rgba(212, 209, 0, 0.863);
+    color: var(--color-primary-btn);
+    border-color: var(--color-primary-btn);
+    text-shadow: 0px 0px 10px var(--color-primary-btn);
+}
+
+.reset-btn:active {
+    transform: scale(0.8);
+}
+
+.config-players {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.new-player, .reset-score {
+    position: relative;
+    font-family: var(--font-tertiary);
+    font-size: 1rem;
+    font-weight: 800;
+    background: hsl(0, 0%, 9%);
+    color: var(--color-bg-btn);
+    letter-spacing: .75px;
+    padding: .75rem 1.25rem;
+    width: fit-content; /* Largura se ajusta ao conteúdo */
+    border-radius: 1rem;
+    border: 4px solid var(--color-bg-btn);
+    margin: 2rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    overflow: hidden;
+    z-index: 1;
+    --glow-x: 50%;
+    --glow-y: 50%;
+}
+
+.new-player::after, .reset-score::after {
+    content: '';
+    position: absolute;
+    top: -15px;  /* Extrapola o tamanho do botão */
+    left: -15px;
+    right: -15px;
+    bottom: -15px;
+    border-radius: 1.25rem; /* Borda maior que a do botão */
+    background: radial-gradient(
+        circle at var(--glow-x) var(--glow-y),
+        rgba(255, 251, 0, 0.7) 0%,
+        transparent 70%
+    );
+    opacity: 0;
+    z-index: -1;
+    pointer-events: none;
+    transition: opacity 0.4s, transform 0.4s;
+}
+
+.new-player:hover::after, .reset-score:hover::after {
+    opacity: 1;
+    transform: scale(1.05);
+}
+
+.new-player:hover, .reset-score:hover {
+    box-shadow: 0 0 15px 5px rgba(212, 209, 0, 0.863);
+    color: var(--color-primary-btn);
+    border-color: var(--color-primary-btn);
+    text-shadow: 0px 0px 10px var(--color-primary-btn);
+}
+
+.new-player:active, .reset-score:active {
+    transform: scale(0.8);
 }

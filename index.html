@@ -57,41 +57,41 @@
                     <input type="text" id="name-player-two" class="dynamic-input" placeholder=" ">
                 </div>
                 <span>
-                    <button type="button" class="add-players" aria-hidden="true" data-text="Adicionar Jogadores">Adicionar Jogadores</button>
+                    <button type="button" id="add-players-btn" class="add-players" aria-hidden="true" data-text="Adicionar Jogadores">Adicionar Jogadores</button>
                 </span>
             </div>
             <div class="scoreboard-main">
                 <div class="section-one">
-                    <input type="text" class="player-one" value="Maycke" disabled>
-                    <input type="text"  class="score-player-one" value="50 wins"  disabled>
+                    <input type="text" class="player-one" disabled>
+                    <input type="text"  class="score-player-one" disabled>
                 </div>
                 
                 <span><img class="versus" src="icons/versus.png" alt="Imagem de VS que vai ficar no meio dos dois jogadores"></span>
                 
                 <div class="section-two">
-                    <input type="text" class="player-two" value="Maycke" disabled>
-                    <input type="text" class="score-player-two" value="50 wins" disabled>
+                    <input type="text" class="player-two" disabled>
+                    <input type="text" class="score-player-two" disabled>
                 </div>
             </section>
             <div class="config-players">
-                <button type="button" id="choose-new-players">Escolher novos jogadores</button>
-                <button type="reset" id="reset-scoreboard-btn">Resetar placar</button>
+                <button type="button" class="new-player" id="choose-new-players">Escolher novos jogadores</button>
+                <button type="reset" class="reset-score" id="reset-scoreboard-btn">Resetar placar</button>
             </div>
         </section>
         <section class="game-container">
             <div>
-                <button type="reset" id="reset-game-btn">Restart</button>
+                <button type="reset" id="reset-game-btn" class="reset-btn">Restart</button>
             </div>
-            <div class="game-grid">
-                <div class="cell cell-0" data-cell="0"></div>
-                <div class="cell cell-1" data-cell="1"></div>
-                <div class="cell cell-2" data-cell="2"></div>
-                <div class="cell cell-3" data-cell="3"></div>
-                <div class="cell cell-4" data-cell="4"></div>
-                <div class="cell cell-5" data-cell="5"></div>
-                <div class="cell cell-6" data-cell="6"></div>
-                <div class="cell cell-7" data-cell="7"></div>
-                <div class="cell cell-8" data-cell="8"></div>
+            <div class="game-grid" id="gameGrid">
+                <div class="cell cell-1" data-cell="0"></div>
+                <div class="cell cell-2" data-cell="1"></div>
+                <div class="cell cell-3" data-cell="2"></div>
+                <div class="cell cell-4" data-cell="3"></div>
+                <div class="cell cell-5" data-cell="4"></div>
+                <div class="cell cell-6" data-cell="5"></div>
+                <div class="cell cell-7" data-cell="6"></div>
+                <div class="cell cell-8" data-cell="7"></div>
+                <div class="cell cell-9" data-cell="8"></div>
             </div>
         </section>
     </main>
