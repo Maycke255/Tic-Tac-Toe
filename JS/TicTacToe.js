@@ -57,8 +57,35 @@ document.querySelectorAll(`.reset-score`).forEach(function (btn) {
     });
 });
 
-document.getElementById(`add-players-btn`).addEventListener(function (){
-    const playerX = document.getElementById(`name-player-one`).value
-    const playerO = document.getElementById(`name-player-two`).value
+document.getElementById(`add-players-btn`).addEventListener(`click`, function (){
+
+
+    const playerX = document.getElementById(`name-player-one`).value;
+    const playerO = document.getElementById(`name-player-two`).value;
     
+    const nameX = document.querySelector(`.player-one`);
+    const nameO = document.querySelector(`.player-two`);
+
+    if (playerX.value === `` && playerO.value === ``) {
+        playerO.classList.add(`error`)
+        playerX.classList.add(`error`)
+
+        playerO.focus()
+        playerX.focus()
+
+        setTimeout(function () { 
+            playerO.classList.remove('error')
+        }, 1000);
+
+        setTimeout(function () { 
+            playerX.classList.remove('error')
+        }, 1000);
+        return;
+    }
+
+    nameX.value += playerX
+    nameO.value += playerO
+
+    playerX.value = ``;
+    playerO.value = ``;
 })

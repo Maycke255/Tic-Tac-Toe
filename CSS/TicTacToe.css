@@ -31,10 +31,10 @@ body {
 }
 
 header {
-  position: relative;
-  padding: 20px 16px;
-  text-align: center;
-  overflow: hidden;
+    position: relative;
+    padding: 20px 16px;
+    text-align: center;
+    overflow: hidden;
 }
 
 h1 {
@@ -515,4 +515,10 @@ h1 {
 
 .new-player:active, .reset-score:active {
     transform: scale(0.8);
+}
+
+.error {
+    background-color: var(--color-red) !important;
+    color: #eff0e5 !important;
+    font-style: italic;
 }
