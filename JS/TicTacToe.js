@@ -58,10 +58,8 @@ document.querySelectorAll(`.reset-score`).forEach(function (btn) {
 });
 
 document.getElementById(`add-players-btn`).addEventListener(`click`, function (){
-
-
-    const playerX = document.getElementById(`name-player-one`).value;
-    const playerO = document.getElementById(`name-player-two`).value;
+    const playerX = document.getElementById(`name-player-one`)
+    const playerO = document.getElementById(`name-player-two`)
     
     const nameX = document.querySelector(`.player-one`);
     const nameO = document.querySelector(`.player-two`);
@@ -70,21 +68,17 @@ document.getElementById(`add-players-btn`).addEventListener(`click`, function ()
         playerO.classList.add(`error`)
         playerX.classList.add(`error`)
 
-        playerO.focus()
         playerX.focus()
 
         setTimeout(function () { 
-            playerO.classList.remove('error')
-        }, 1000);
-
-        setTimeout(function () { 
-            playerX.classList.remove('error')
-        }, 1000);
+            playerO.classList.remove('error');
+            playerX.classList.remove('error');
+        }, 1100);
         return;
     }
 
-    nameX.value += playerX
-    nameO.value += playerO
+    nameX.textContent += playerX.value
+    nameO.textContent += playerO.value
 
     playerX.value = ``;
     playerO.value = ``;
