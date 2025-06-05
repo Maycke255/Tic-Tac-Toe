@@ -523,12 +523,109 @@ h1 {
     font-style: italic;
 }
 
+@media (prefers-color-scheme: light) {
+    :root {
+        --color-bg-primary:#fcfcfc;
+        --color-font-primary:#191a19;
+    }
+
+    .dynamic-input {
+        display: block;
+        width: 100%;
+        padding: 0.5rem 0;
+        border: none;
+        border-bottom: 2px solid #1f2408;
+        background: transparent;
+        font-size: 1rem;
+        color: var(--color-font-primary);
+        outline: none;
+        transition: all 0.3s ease;
+        height: 30px;
+        overflow: hidden;
+    }
+
+    .dynamic-input:focus,
+    .dynamic-input:not(:placeholder-shown) {
+        height: 60px;
+        padding: 1rem;
+        border: 2px solid #1f2408;
+        border-radius: 0.75rem;
+        background-color: rgba(196, 197, 117, 0.3);
+    }
+
+/* Efeito hover */
+    .dynamic-input:hover {
+        height: 60px;
+        padding: 1rem;
+        border: 2px solid #1f2408;
+        border-radius: 0.75rem;
+        background-color: rgba(196, 197, 117, 0.3);
+    }
+
+    .cell {
+        background: transparent;
+        position: relative;
+        border: 5px solid transparent;
+    }
+
+    .cell::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        border: 5px solid;
+        border-image: linear-gradient(45deg, 
+            #ff0000, #ff7700, #ffdd00, 
+            #00ff00, #0000ff, #ff00ff) 1;
+        animation: rgbBorder 7s linear infinite;
+        z-index: -1;
+    }
+
+    .player-one, 
+    .player-two {
+        font-family: var(--font-secondary);
+        color: var(--color-title);
+        text-shadow: 0 4px 5px  #333203;
+        text-align: center;
+        font-size: 1.5rem;
+        width: 12.5rem;
+        height: 3.3rem;
+        background: linear-gradient(to bottom, rgb(34, 32, 2), #e0cb11 100%);
+        box-shadow: 0 2px 12px #1d1f01b6;
+        border: 2px solid #d4d104;
+        border-bottom: 0;
+        border-radius: 2rem 2rem 0 0;
+    }
+
+    .score-player-one,
+    .score-player-two {
+        font-family: var(--font-number);
+        color: var(--color-primary-btn);
+        text-align: center;
+        background: radial-gradient(circle at center, #0b630eb6 0%, #010c01b6 100%);
+        box-shadow: 0 2px 12px #1d1f01b6;
+        width: 12.5rem;
+        height: 6.5rem;
+        font-size: 2rem;
+        border: 2px solid #053807b6;
+        border-top: 0;
+        border-radius: 0 0 2rem 2rem;
+        display: block;
+    }
+
+    .versus {
+        filter: drop-shadow(0 10px 15px rgba(112, 110, 7, 0.911)); 
+    }
+}
+
 @media (min-width: 590px) {
     .players{
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    align-items: center;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        align-items: center;
     }
 
     .names {
@@ -536,9 +633,9 @@ h1 {
     }
 
     .config-players {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
     }
 
     .game-grid {
@@ -548,10 +645,47 @@ h1 {
 }
 
 @media (min-width: 768px) {
+    h1 {
+        font-family: var(--font-secondary);
+        font-weight: 800;
+        font-size: clamp(2rem, 2.25rem, 2.75rem);
+        font-optical-sizing: auto;
+        background: var(--color-title);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        margin: 0;
+        text-shadow: 0 1px 1px rgba(255, 255, 255, 0.3),
+        0 2px 3px rgba(255, 165, 0, 0.4), 
+        0 0 8px rgba(97, 84, 8, 0.6), 
+        0 0 15px rgba(65, 35, 0, 0.4);
+        position: relative;
+        z-index: 2;
+        filter: drop-shadow(0 3px 5px rgba(0, 0, 0, 0.9));
+        -webkit-text-fill-color: transparent;
+        paint-order: stroke fill;
+    }
+
     .scoreboard-main {
         display: flex;
         justify-content: center;
         margin-top: 3rem;
         margin-bottom: 3rem;
+    }
+
+    .scoreboard-main span {
+        display: flex;
+        justify-items: center;
+        height: fit-content;
+        align-self: center;
+    }
+
+    .versus {
+        max-width: 10rem;
+        height: auto;
+    }
+
+    .config-players {
+        justify-content: space-around;
     }
 }
