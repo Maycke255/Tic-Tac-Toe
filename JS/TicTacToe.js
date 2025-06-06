@@ -78,6 +78,9 @@ const cells = document.querySelectorAll(`cell`)
 //Display para exibir os eventos
 const display = document.querySelector(`.display`)
 
+//Botão para resetar o tabuleiro
+const resetBtn = document.getElementById(`reset-game-btn`)
+
 //Condições de vitoria
 const winConditions = [
     //horizontais
@@ -94,14 +97,29 @@ const winConditions = [
 ]
 
 //Opções
-let options = ["", "", "", "", "", "", "", "", ""]
-let currentPlayer = "X";
+let options = ["", "", "", "", "", "", "", "", ""] // Inicialmente o tabuleiro irá começar com as divs vazias
+let currentPlayer = "X"; // Jogador X começa primeiro como na observação
 let gameActive = true;
+
+// Adicionando event listerns para as celulas
+cells.forEach(function (cellClicked) {
+    cellClicked.addEventListener(`click`, handleCellClick)
+})
+
+// Adicionando event listern para o reset-btn
+resetBtn.addEventListener(`click`, resetGame)
+
+// Função principal que lida com os cliques nas celulas
+function handleCellClick (ev) {
+    const clickedCell = ev.target;
+    const clickedCellIndex = parseInt(clickedCell.getAttribute(`data-cell`));
+}
 
 initializeGame()
 
 function initializeGame () {
     display.textContent = `Vez do jogador ${currentPlayer}.`
+    display.classList.add(`text`)
 }
 
 document.getElementById(`add-players-btn`).addEventListener(`click`, function (){
@@ -138,5 +156,5 @@ document.getElementById(`choose-new-players`).addEventListener(`click`, function
     scorePlayerO.value = ``;
 
     playerXName.focus()  
-    playerOName.focus()  
+    playerOName.focus() 
 })

@@ -357,6 +357,17 @@ h1 {
     text-justify: center;
 }
 
+.text {
+    font-size: 2rem;
+    font-family: var(--font-tertiary);
+    font-weight: 700;
+    background:  linear-gradient(to right, var(--color-red), var(--color-orange));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-shadow: 0 0px 5px rgba(48, 12, 4, 0.3), 0 0 5px rgba(255, 238, 0, 0.774);
+}
+
 .game-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
