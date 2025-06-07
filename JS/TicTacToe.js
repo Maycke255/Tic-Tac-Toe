@@ -59,102 +59,175 @@ document.querySelectorAll(`.reset-score`).forEach(function (btn) {
     });
 });
 
-//VARIAVEIS QUE USAREMOS NO CÓDIGO:
-// Inputs dinamicos dos nomes
-const playerXName = document.getElementById(`name-player-one`)
-const playerOName = document.getElementById(`name-player-two`)
+// ==============================================
+// 1. SELEÇÃO DE ELEMENTOS E VARIÁVEIS GLOBAIS
+// ==============================================
 
-//Inputs dos nomes na tabela de pontuação
-const nameX = document.querySelector(`.player-one`);
-const nameO = document.querySelector(`.player-two`);
+// Elementos do DOM
+const playerXName = document.getElementById('name-player-one');
+const playerOName = document.getElementById('name-player-two');
+const nameX = document.querySelector('.player-one');
+const nameO = document.querySelector('.player-two');
+const scorePlayerX = document.querySelector('.score-player-one');
+const scorePlayerO = document.querySelector('.score-player-two');
+const cells = document.querySelectorAll('.cell');
+const display = document.querySelector('.display');
+const resetBtn = document.getElementById('reset-game-btn');
 
-//Placar de pontuação
-const scorePlayerX = document.getElementById(`score-player-one`)
-const scorePlayerO = document.getElementById(`score-player-two`)
-
-//Celulas
-const cells = document.querySelectorAll(`cell`)
-
-//Display para exibir os eventos
-const display = document.querySelector(`.display`)
-
-//Botão para resetar o tabuleiro
-const resetBtn = document.getElementById(`reset-game-btn`)
-
-//Condições de vitoria
+// Configurações do jogo
 const winConditions = [
-    //horizontais
-    [0, 1, 2],
-    [3, 4, 5],
-    [6, 7, 8],
-    //verticais
-    [0, 3, 6],
-    [1, 4, 7],
-    [2, 5, 8],
-    //diagonais
-    [0, 4, 8],
-    [2, 4, 6]
-]
+    [0, 1, 2], [3, 4, 5], [6, 7, 8], // linhas
+    [0, 3, 6], [1, 4, 7], [2, 5, 8], // colunas
+    [0, 4, 8], [2, 4, 6]             // diagonais
+];
 
-//Opções
-let options = ["", "", "", "", "", "", "", "", ""] // Inicialmente o tabuleiro irá começar com as divs vazias
-let currentPlayer = "X"; // Jogador X começa primeiro como na observação
+// Estado do jogo
+let gameState = ['', '', '', '', '', '', '', '', ''];
+let currentPlayer = 'X';
 let gameActive = true;
 
-// Adicionando event listerns para as celulas
-cells.forEach(function (cellClicked) {
-    cellClicked.addEventListener(`click`, handleCellClick)
-})
+// ==============================================
+// 2. FUNÇÕES PRINCIPAIS DO JOGO
+// ==============================================
 
-// Adicionando event listern para o reset-btn
-resetBtn.addEventListener(`click`, resetGame)
-
-// Função principal que lida com os cliques nas celulas
-function handleCellClick (ev) {
-    const clickedCell = ev.target;
-    const clickedCellIndex = parseInt(clickedCell.getAttribute(`data-cell`));
+function initializeGame() {
+    // Inicializa o estado do jogo
+    gameState = ['', '', '', '', '', '', '', '', ''];
+    currentPlayer = 'X';
+    gameActive = true;
+    
+    // Limpa o tabuleiro visualmente
+    cells.forEach(function (cell) {
+        cell.textContent = '';
+        cell.classList.remove('winning-cell');
+    });
+    
+    // Atualiza o display
+    updateDisplay();
 }
 
-initializeGame()
-
-function initializeGame () {
-    display.textContent = `Vez do jogador ${currentPlayer}.`
-    display.classList.add(`text`)
+function handleCellClick(e) {
+    const clickedCell = e.target;
+    const clickedCellIndex = parseInt(clickedCell.getAttribute('data-cell'));
+    
+    if (gameState[clickedCellIndex] !== '' || !gameActive) return;
+    
+    gameState[clickedCellIndex] = currentPlayer;
+    clickedCell.textContent = currentPlayer;
+    
+    checkResult();
 }
 
-document.getElementById(`add-players-btn`).addEventListener(`click`, function (){
-    if (playerXName.value === `` && playerOName.value === ``) {
-        playerOName.classList.add(`error`)
-        playerXName.classList.add(`error`)
+function checkResult() {
+    let roundWon = false;
+    
+    for (let i = 0; i < winConditions.length; i++) {
+        const [a, b, c] = winConditions[i];
+        if (gameState[a] === '' || gameState[b] === '' || gameState[c] === '') continue;
+        
+        if (gameState[a] === gameState[b] && gameState[b] === gameState[c]) {
+            roundWon = true;
+            highlightWinningCells(winConditions[i]);
+            break;
+        }
+    }
+    
+    if (roundWon) {
+        display.textContent = `Jogador ${currentPlayer} venceu!`;
+        updateScore(currentPlayer);
+        gameActive = false;
+        return;
+    }
+    
+    if (!gameState.includes('')) {
+        display.textContent = 'Empate!';
+        gameActive = false;
+        return;
+    }
+    
+    currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+    updateDisplay();
+}
 
-        playerXName.focus()
+function updateDisplay() {
+    if (nameX.value && nameO.value) {
+        const playerName = currentPlayer === 'X' ? nameX.value : nameO.value;
+        display.textContent = `Vez de ${playerName} (${currentPlayer})`;
+    } else {
+        display.textContent = `Vez do jogador ${currentPlayer}`;
+    }
+}
 
-        setTimeout(function () { 
+function updateScore(winner) {
+    const scoreElement = winner === 'X' ? scorePlayerX : scorePlayerO;
+    const currentScore = parseInt(scoreElement.value) || 0;
+    scoreElement.value = currentScore + 1;
+}
+
+function resetGame() {
+    initializeGame();
+}
+
+function highlightWinningCells(cellsIndexes) {
+    cellsIndexes.forEach(function (index) {
+        cells[index].classList.add('winning-cell');
+    });
+}
+
+// ==============================================
+// 3. FUNÇÕES DE GERENCIAMENTO DE JOGADORES
+// ==============================================
+
+function addPlayers() {
+    if (playerXName.value === '' && playerOName.value === '') {
+        playerOName.classList.add('error');
+        playerXName.classList.add('error');
+        playerXName.focus();
+
+        setTimeout(function () {
             playerOName.classList.remove('error');
             playerXName.classList.remove('error');
         }, 1100);
         return;
     }
 
-    nameX.textContent += playerXName.value
-    nameO.textContent += playerOName.value
+    nameX.value = playerXName.value;
+    nameO.value = playerOName.value;
 
-    playerXName.value = ``;
-    playerOName.value = ``;
+    playerXName.value = '';
+    playerOName.value = '';
+    
+    updateDisplay();
+}
+
+function resetScoreboard() {
+    scorePlayerX.value = '';
+    scorePlayerO.value = '';
+}
+
+function chooseNewPlayers() {
+    nameX.value = '';
+    nameO.value = '';
+    playerXName.focus();
+}
+
+// ==============================================
+// 4. EVENT LISTENERS
+// ==============================================
+
+// Eventos do jogo
+cells.forEach(function (cell){ 
+    cell.addEventListener('click', handleCellClick)
 })
+resetBtn.addEventListener('click', resetGame);
 
-document.getElementById(`reset-scoreboard-btn`).addEventListener(`click`, function () {
-    scorePlayerX.value = ``
-    scorePlayerO.value = ``
-})
+// Eventos de gerenciamento de jogadores
+document.getElementById('add-players-btn').addEventListener('click', addPlayers);
+document.getElementById('reset-scoreboard-btn').addEventListener('click', resetScoreboard);
+document.getElementById('choose-new-players').addEventListener('click', chooseNewPlayers);
 
-document.getElementById(`choose-new-players`).addEventListener(`click`, function () {
-    nameX.value = ``;
-    nameO.value = ``;
+// ==============================================
+// 5. INICIALIZAÇÃO DO JOGO
+// ==============================================
 
-    scorePlayerX.value = ``;
-    scorePlayerO.value = ``;
-
-    playerXName.focus()  
-    playerOName.focus() 
-})
+initializeGame();
