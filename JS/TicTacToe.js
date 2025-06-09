@@ -64,14 +64,14 @@ document.querySelectorAll(`.reset-score`).forEach(function (btn) {
 // ==============================================
 
 // Elementos do DOM
-const playerXName = document.getElementById('name-player-one');
+const playerXName = document.getElementById('name-player-one'); // Pegando o input de inserir os nomes
 const playerOName = document.getElementById('name-player-two');
-const nameX = document.querySelector('.player-one');
+const nameX = document.querySelector('.player-one'); // Pegando os inputs dos nomes que aparecem no score
 const nameO = document.querySelector('.player-two');
-const scorePlayerX = document.querySelector('.score-player-one');
+const scorePlayerX = document.querySelector('.score-player-one'); // Pegando os score de pontuação
 const scorePlayerO = document.querySelector('.score-player-two');
-const cells = document.querySelectorAll('.cell');
-const display = document.querySelector('.display');
+const cells = document.querySelectorAll('.cell'); // Pegamos todas as celulas do tabuleiro
+const display = document.querySelector('.display'); // Onde iremos exibir a mensagem
 const resetBtn = document.getElementById('reset-game-btn');
 
 // Configurações do jogo
@@ -82,21 +82,22 @@ const winConditions = [
 ];
 
 // Estado do jogo
-let gameState = ['', '', '', '', '', '', '', '', ''];
-let currentPlayer = 'X';
-let gameActive = true;
+let gameState = ['', '', '', '', '', '', '', '', '']; // Essa array e responsavel por representar as celulas vazias do tabuleiro
+let currentPlayer = 'X'; // Primeiro iniciamos dizendo que o player que começa e jogador X
+let gameActive = true; // Ativa o game automaticamente
 
 // ==============================================
 // 2. FUNÇÕES PRINCIPAIS DO JOGO
 // ==============================================
 
 function initializeGame() {
-    // Inicializa o estado do jogo
+    // Inicializa/Reenicia o estado do jogo
+    // Primeiro vimos a mesma coisa de antes, apenas zeramos as celulas do tabuleiro e tudo mais
     gameState = ['', '', '', '', '', '', '', '', ''];
     currentPlayer = 'X';
     gameActive = true;
     
-    // Limpa o tabuleiro visualmente
+    // Limpa o tabuleiro visualmente, tiramos a classe do ganhador e tiramos tudo
     cells.forEach(function (cell) {
         cell.textContent = '';
         cell.classList.remove('winning-cell');
@@ -106,6 +107,8 @@ function initializeGame() {
     updateDisplay();
 }
 
+/* Função de click para as celulas, pegamos o evento disparado ao clicar na celula usando o target, e nesse evento, pegamos o atributo que colocamos
+ma celula no HTML, o data-cell, que representa a celula em si */
 function handleCellClick(e) {
     const clickedCell = e.target;
     const clickedCellIndex = parseInt(clickedCell.getAttribute('data-cell'));
