@@ -112,29 +112,61 @@ ma celula no HTML, o data-cell, que representa a celula em si */
 function handleCellClick(e) {
     const clickedCell = e.target;
     const clickedCellIndex = parseInt(clickedCell.getAttribute('data-cell'));
-    
+
+    /* Fazemos uma verificação inline rapida, caso a celula já foi preenchida (gameState na posição do evento de clique da celula for diferente da string
+    vazia) ou o game esta inativo, não faz nada, apenas retorna */
     if (gameState[clickedCellIndex] !== '' || !gameActive) return;
     
+    /* Aqui atualizamos o estado do jogo e a interface, dizemos que o gameState que e o estado do tabuleiro na posição do evento da celula clicada vai
+    ser reatribuida para o jogador inicial, no caso o X ou O. Em seguida, dizemos que a posição do evento da celula clicada vai ter um conteudo de texto
+    que e a propria string representando o jogador, X ou O. */
     gameState[clickedCellIndex] = currentPlayer;
     clickedCell.textContent = currentPlayer;
     
+    //Chamamos a função para verificar se houve algum resultado ou empate
     checkResult();
 }
 
 function checkResult() {
     let roundWon = false;
     
+    /* Esse loop for e responsavel por verificar cada condição de vitoria, fazemos isso a cada clique na celula para verificar todo o tabuleiro */
     for (let i = 0; i < winConditions.length; i++) {
-        const [a, b, c] = winConditions[i];
-        if (gameState[a] === '' || gameState[b] === '' || gameState[c] === '') continue;
+        const [a, b, c] = winConditions[i]; /* Desestruturação dos indices, isso e chamado de desestruturação de array, onde queremos atribuir letras
+        aos elementos dentro da array, nesse caso a winConditions[i] retorna uma array com 8 elementos, e dentro desses 8 elementos existem mais 3
+        elementos, e cada um desses elementos representa as letras, por exemplo no caso do primeiro elemento: [0, 1, 2] fica -> 0 = a, 1 = b, 2 = c  */
         
+        /* Como Funciona gameState[a], gameState[b], gameState[c]
+        gameState é um array que representa o tabuleiro. Por exemplo:
+        gameState = ['X', 'O', '', 'X', '', '', 'O', '', '']
+        gameState[0] → 'X'
+        gameState[1] → 'O'
+        gameState[2] → '' */
+        if (gameState[a] === '' || gameState[b] === '' || gameState[c] === '') continue;
+
+        /*A verificação gameState[a] === gameState[b] && gameState[b] === gameState[c] checa se:
+        - Todas as três posições têm valores (não estão vazias)
+        - Todos os valores são iguais (X ou O) */
         if (gameState[a] === gameState[b] && gameState[b] === gameState[c]) {
+            /* Exemplo completo:
+            gameState = ['X', 'X', 'X', 'O', '', '', '', 'O', '']
+            Estamos verificando winConditions[0] que é [0, 1, 2]
+            const [a, b, c] = [0, 1, 2] → a=0, b=1, c=2
+            Verifica:
+            gameState[0] → 'X'
+            gameState[1] → 'X'
+            gameState[2] → 'X'
+            Como todos são 'X', é uma vitória
+            Chama highlightWinningCells([0, 1, 2])
+            Adiciona a classe winning-cell às células 0, 1 e 2 */
             roundWon = true;
             highlightWinningCells(winConditions[i]);
             break;
         }
     }
     
+    /* Aqui atualizamos o display para exibir o jogador vencedor, veridicamos a condição no inicio que determina o ganhador, caso haja algum o display
+    atualiza o score chamando a função com o nome do jogador e jogo e parado */
     if (roundWon) {
         display.textContent = `Jogador ${currentPlayer} venceu!`;
         updateScore(currentPlayer);
@@ -142,25 +174,34 @@ function checkResult() {
         return;
     }
     
+    /* Função para verificar se há empate, a função verifica se há alguma celula vazia no gameState, caso tenha, atualiza o display e para o jogo */
     if (!gameState.includes('')) {
         display.textContent = 'Empate!';
         gameActive = false;
         return;
     }
     
+    /* Uma das funções mais importantes, atualiza a vez do jogador se o jogo continuar, caso o currentPlayer esteja igual a X, se for X
+    ele muda para O, e caso esteja O ele muda para X, no caso, se for false muda para O, um loop. */
     currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+    // Atualiza o display
     updateDisplay();
 }
 
 function updateDisplay() {
+    // Verifica se os nomes dos jogadores foram definidos
     if (nameX.value && nameO.value) {
+        /* Ao mesmo tempo que atribui uma variavel, verifica qual e o jogador da vez, caso X, recebe o nome do jogador X, caso seja false, caso não seja a
+        vez do jogador X recebe a vez do jogador O. */
         const playerName = currentPlayer === 'X' ? nameX.value : nameO.value;
         display.textContent = `Vez de ${playerName} (${currentPlayer})`;
     } else {
+        // Caso contrario mostra apenas o simbolo
         display.textContent = `Vez do jogador ${currentPlayer}`;
     }
 }
 
+/* Função simples para atualizar o score dos jogadores, caso haja um ganhador */
 function updateScore(winner) {
     const scoreElement = winner === 'X' ? scorePlayerX : scorePlayerO;
     const currentScore = parseInt(scoreElement.value) || 0;
@@ -171,7 +212,11 @@ function resetGame() {
     initializeGame();
 }
 
-function highlightWinningCells(cellsIndexes) {
+/* Aqui esta a função para adicionar uma cor as celulas do ganhador
+    Recebe um array de índices (como [0, 1, 2])
+    Adiciona a classe CSS winning-cell a cada célula vencedora
+    Permite estilizar essas células de forma diferente (como mudar a cor) */
+function highlightWinningCells (cellsIndexes) {
     cellsIndexes.forEach(function (index) {
         cells[index].classList.add('winning-cell');
     });
