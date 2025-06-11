@@ -383,7 +383,59 @@ h1 {
     border: 4px solid transparent;
     display: grid;
     place-content: center;
+    font-weight: bold;
+    color: rgb(255, 0, 242);
 }
+
+/* Substitua as classes por */
+.cell[data-value="X"] {
+    font-weight: bold;
+    font-size: 4rem;
+    color: transparent;
+    background: radial-gradient(circle at center, 
+               rgba(255, 0, 0, 0.9), 
+               rgba(255, 119, 0, 0.9), 
+               rgba(255, 221, 0, 0.9));
+    background-clip: text;
+    -webkit-background-clip: text;
+    background-size: 150% 150%;
+    position: relative; /* Adicionado para z-index funcionar */
+    z-index: 1; /* Coloca o texto acima do fundo */
+}
+
+.cell[data-value="O"] {
+    font-weight: bold;
+    font-size: 4rem;
+    color: transparent;
+    background: radial-gradient(circle at center, 
+               rgba(0, 255, 234, 0.9), 
+               rgba(0, 38, 255, 0.9),
+               rgba(255, 0, 234, 0.9));
+    background-clip: text;
+    -webkit-background-clip: text;
+    background-size: 150% 150%;
+    position: relative; /* Adicionado para z-index funcionar */
+    z-index: 1; /* Coloca o texto acima do fundo */
+}
+
+.winning-cell {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(76, 175, 80, 0.3);
+    animation: winAnimation 1s ease-in-out;
+    z-index: 0;
+}
+
+@keyframes winAnimation {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
 
 .cell::after {
     content: '';
@@ -583,31 +635,6 @@ h1 {
     background-color: var(--color-red) !important;
     color: #eff0e5 !important;
     font-style: italic;
-}
-
-.winning-cell {
-    animation: winAnimation 1s ease-in-out;
-    background-color: rgba(76, 175, 80, 0.3);
-}
-
-@keyframes winAnimation {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.1); }
-    100% { transform: scale(1); }
-}
-
-.cell[data-cell] {
-    font-family: 'Arial', sans-serif;
-    font-weight: bold;
-    font-size: 4rem;
-}
-
-.cell[data-cell="X"] {
-    color: #FF5B5B; /* Vermelho para X */
-}
-
-.cell[data-cell="O"] {
-    color: #6C60FF; /* Azul para O */
 }
 
 @media (prefers-color-scheme: light) {

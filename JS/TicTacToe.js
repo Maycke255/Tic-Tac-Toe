@@ -121,6 +121,7 @@ function handleCellClick(e) {
     ser reatribuida para o jogador inicial, no caso o X ou O. Em seguida, dizemos que a posição do evento da celula clicada vai ter um conteudo de texto
     que e a propria string representando o jogador, X ou O. */
     gameState[clickedCellIndex] = currentPlayer;
+    clickedCell.setAttribute(`data-value`, currentPlayer)
     clickedCell.textContent = currentPlayer;
     
     //Chamamos a função para verificar se houve algum resultado ou empate
@@ -209,6 +210,11 @@ function updateScore(winner) {
 }
 
 function resetGame() {
+    cells.forEach(function (cell) {
+        cell.classList.remove('winning-cell');
+        cell.style.zIndex = '';
+    });
+
     initializeGame();
 }
 
@@ -219,6 +225,7 @@ function resetGame() {
 function highlightWinningCells (cellsIndexes) {
     cellsIndexes.forEach(function (index) {
         cells[index].classList.add('winning-cell');
+        cells[index].style.zIndex = '1';
     });
 }
 
@@ -269,7 +276,7 @@ cells.forEach(function (cell){
 })
 resetBtn.addEventListener('click', resetGame);
 
-// Eventos de gerenciamento de jogadores
+// Eventos de gerenciamento de jogadores, ativa as funções acima, quando o jogador clica em algum desses botões
 document.getElementById('add-players-btn').addEventListener('click', addPlayers);
 document.getElementById('reset-scoreboard-btn').addEventListener('click', resetScoreboard);
 document.getElementById('choose-new-players').addEventListener('click', chooseNewPlayers);
