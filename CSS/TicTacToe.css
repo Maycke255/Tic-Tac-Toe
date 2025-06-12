@@ -353,8 +353,82 @@ h1 {
 }
 
 .display {
+    font-size: 2rem;
+    font-family: var(--font-tertiary);
+    color: transparent;
+    background: radial-gradient(circle at center, rgb(255, 251, 0), rgb(255, 153, 0));
+    background-clip: text;
+    -webkit-background-clip: text;
+    font-weight: bolder;
+    text-shadow: 0 1px 10px rgb(255, 251, 0);
     margin: 4rem;
-    text-justify: center;
+    padding: 15px 25px;
+    border-radius: 10px;
+    text-align: center;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Efeito de vitória - versão RGB */
+.winner-display {
+    animation: winnerAnimation 2s ease infinite;
+    background: linear-gradient(90deg, 
+        rgba(255,0,0,0.2), 
+        rgba(0,255,0,0.2), 
+        rgba(0,0,255,0.2));
+    background-size: 200% 200%;
+    box-shadow: 0 0 15px rgba(255,255,255,0.5);
+    text-shadow: 0 0 10px currentColor;
+}
+
+/* Efeito de vitória - versão dourada (alternativa) */
+.winner-display-gold {
+    animation: goldPulse 1.5s ease infinite;
+    background: linear-gradient(45deg, #ffd700, #ff8c00, #ffd700);
+    color: transparent; /* Isso substitui o text-fill-color */
+    -webkit-background-clip: text;
+    background-clip: text;
+}
+
+/* Animações */
+@keyframes winnerAnimation {
+    0% {
+        background-position: 0% 50%;
+        transform: scale(1);
+    }
+    50% {
+        background-position: 100% 50%;
+        transform: scale(1.05);
+    }
+    100% {
+        background-position: 0% 50%;
+        transform: scale(1);
+    }
+}
+
+@keyframes goldPulse {
+    0%, 100% {
+        text-shadow: 0 0 10px #ffd700, 0 0 20px #ff8c00;
+    }
+    50% {
+        text-shadow: 0 0 15px #ffd700, 0 0 30px #ff8c00;
+    }
+}
+
+@keyframes textPop {
+    0% {
+        transform: scale(1);
+        opacity: 0.7;
+    }
+    50% {
+        transform: scale(1.2);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(1.1);
+        opacity: 1;
+    }
 }
 
 .text {

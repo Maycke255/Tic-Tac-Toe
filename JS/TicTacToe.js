@@ -162,6 +162,9 @@ function checkResult() {
             Adiciona a classe winning-cell às células 0, 1 e 2 */
             roundWon = true;
             highlightWinningCells(winConditions[i]);
+            animateWinnerDisplay(currentPlayer); // Nova função
+            updateScore(currentPlayer);
+            gameActive = false;
             break;
         }
     }
@@ -178,6 +181,7 @@ function checkResult() {
     /* Função para verificar se há empate, a função verifica se há alguma celula vazia no gameState, caso tenha, atualiza o display e para o jogo */
     if (!gameState.includes('')) {
         display.textContent = 'Empate!';
+        display.classList.add('winner-display'); // Ou outra classe de animação
         gameActive = false;
         return;
     }
@@ -216,6 +220,25 @@ function resetGame() {
     });
 
     initializeGame();
+}
+
+// Nova função para animar o display
+function animateWinnerDisplay(winner) {
+    const display = document.querySelector('.display');
+    
+    // Limpa classes anteriores
+    display.classList.remove('winner-display', 'winner-display-gold', 'text-pop');
+    
+    // Adiciona a animação
+    display.classList.add('winner-display'); // Escolha a classe de animação preferida
+    
+    // Efeito adicional de pop
+    display.style.animation = 'textPop 0.5s ease-out forwards';
+    
+    // Remove a animação após completar para poder reutilizar
+    setTimeout(() => {
+        display.style.animation = '';
+    }, 500);
 }
 
 /* Aqui esta a função para adicionar uma cor as celulas do ganhador
