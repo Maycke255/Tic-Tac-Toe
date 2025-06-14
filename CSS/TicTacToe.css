@@ -347,88 +347,39 @@ h1 {
     50% { transform: translateY(-20px); }
 }
 
-
 .game-container {
     justify-items: center;
 }
 
-.display {
-    font-size: 2rem;
-    font-family: var(--font-tertiary);
-    color: transparent;
-    background: radial-gradient(circle at center, rgb(255, 251, 0), rgb(255, 153, 0));
-    background-clip: text;
-    -webkit-background-clip: text;
-    font-weight: bolder;
-    text-shadow: 0 1px 10px rgb(255, 251, 0);
-    margin: 4rem;
-    padding: 15px 25px;
-    border-radius: 10px;
-    text-align: center;
-    transition: all 0.3s ease;
+.display-container {
+    margin: 2rem;
+    padding: 1rem;
     position: relative;
-    overflow: hidden;
 }
 
-/* Efeito de vitória - versão RGB */
-.winner-display {
-    animation: winnerAnimation 2s ease infinite;
-    background: linear-gradient(90deg, 
-        rgba(255,0,0,0.2), 
-        rgba(0,255,0,0.2), 
-        rgba(0,0,255,0.2));
-    background-size: 200% 200%;
-    box-shadow: 0 0 15px rgba(255,255,255,0.5);
-    text-shadow: 0 0 10px currentColor;
-}
-
-/* Efeito de vitória - versão dourada (alternativa) */
-.winner-display-gold {
-    animation: goldPulse 1.5s ease infinite;
-    background: linear-gradient(45deg, #ffd700, #ff8c00, #ffd700);
-    color: transparent; /* Isso substitui o text-fill-color */
+.display-text {
+    font-size: 2rem;
+    font-weight: bold;
+    position: relative;
+    z-index: 2;
+    background: linear-gradient(to right, gold, orange);
     -webkit-background-clip: text;
     background-clip: text;
+    color: transparent;
 }
 
-/* Animações */
-@keyframes winnerAnimation {
-    0% {
-        background-position: 0% 50%;
-        transform: scale(1);
-    }
-    50% {
-        background-position: 100% 50%;
-        transform: scale(1.05);
-    }
-    100% {
-        background-position: 0% 50%;
-        transform: scale(1);
-    }
+.display-container.winner .display-text {
+    animation: textPop 0.5s ease infinite;
 }
 
-@keyframes goldPulse {
-    0%, 100% {
-        text-shadow: 0 0 10px #ffd700, 0 0 20px #ff8c00;
-    }
-    50% {
-        text-shadow: 0 0 15px #ffd700, 0 0 30px #ff8c00;
-    }
+@keyframes winPulse {
+    0%, 100% { opacity: 0.7; }
+    50% { opacity: 1; }
 }
 
 @keyframes textPop {
-    0% {
-        transform: scale(1);
-        opacity: 0.7;
-    }
-    50% {
-        transform: scale(1.2);
-        opacity: 1;
-    }
-    100% {
-        transform: scale(1.1);
-        opacity: 1;
-    }
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
 }
 
 .text {
@@ -441,6 +392,7 @@ h1 {
     color: transparent;
     text-shadow: 0 0px 5px rgba(48, 12, 4, 0.3), 0 0 5px rgba(255, 238, 0, 0.774);
 }
+
 
 .game-grid {
     display: grid;
@@ -467,9 +419,9 @@ h1 {
     font-size: 4rem;
     color: transparent;
     background: radial-gradient(circle at center, 
-               rgba(255, 0, 0, 0.9), 
-               rgba(255, 119, 0, 0.9), 
-               rgba(255, 221, 0, 0.9));
+            rgba(255, 0, 0, 0.9), 
+            rgba(255, 119, 0, 0.9), 
+            rgba(255, 221, 0, 0.9));
     background-clip: text;
     -webkit-background-clip: text;
     background-size: 150% 150%;
@@ -482,9 +434,9 @@ h1 {
     font-size: 4rem;
     color: transparent;
     background: radial-gradient(circle at center, 
-               rgba(0, 255, 234, 0.9), 
-               rgba(0, 38, 255, 0.9),
-               rgba(255, 0, 234, 0.9));
+            rgba(0, 255, 234, 0.9), 
+            rgba(0, 38, 255, 0.9),
+            rgba(255, 0, 234, 0.9));
     background-clip: text;
     -webkit-background-clip: text;
     background-size: 150% 150%;
@@ -499,7 +451,7 @@ h1 {
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(76, 175, 80, 0.3);
+    background: rgba(76, 175, 80, 0.3) !important;
     animation: winAnimation 1s ease-in-out;
     z-index: 0;
 }

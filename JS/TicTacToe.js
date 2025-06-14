@@ -1,63 +1,24 @@
 // EFEITOS VISUAIS PARA O CSS
 
-document.querySelectorAll('.add-players').forEach(function (btn) {
-    btn.addEventListener('mousemove', function (e) {
-        const rect = e.target.getBoundingClientRect();
-        const x = ((e.clientX - rect.left) / rect.width) * 100;
-        const y = ((e.clientY - rect.top) / rect.height) * 100;
-        e.target.style.setProperty('--glow-x', `${x}%`);
-        e.target.style.setProperty('--glow-y', `${y}%`);
-    });
-    
-    btn.addEventListener('mouseleave',function () {
-        btn.style.setProperty('--glow-x', '50%');
-        btn.style.setProperty('--glow-y', '50%');
-    });
-});
+function applyGlowEffect(selector) {
+    document.querySelectorAll(selector).forEach(function (btn) {
+        btn.addEventListener('mousemove', function (e) {
+            const rect = e.target.getBoundingClientRect();
+            const x = ((e.clientX - rect.left) / rect.width) * 100;
+            const y = ((e.clientY - rect.top) / rect.height) * 100;
+            e.target.style.setProperty('--glow-x', `${x}%`);
+            e.target.style.setProperty('--glow-y', `${y}%`);
+        });
 
-document.querySelectorAll(`.reset-btn`).forEach(function (btn) {
-    btn.addEventListener('mousemove', function (e) {
-        const rect = e.target.getBoundingClientRect();
-        const x = ((e.clientX - rect.left) / rect.width) * 100;
-        const y = ((e.clientY - rect.top) / rect.height) * 100;
-        e.target.style.setProperty('--glow-x', `${x}%`);
-        e.target.style.setProperty('--glow-y', `${y}%`);
+        btn.addEventListener('mouseleave', function () {
+            btn.style.setProperty('--glow-x', '50%');
+            btn.style.setProperty('--glow-y', '50%');
+        });
     });
-    
-    btn.addEventListener('mouseleave',function () {
-        btn.style.setProperty('--glow-x', '50%');
-        btn.style.setProperty('--glow-y', '50%');
-    });
-});
-document.querySelectorAll(`.new-player`).forEach(function (btn) {
-    btn.addEventListener('mousemove', function (e) {
-        const rect = e.target.getBoundingClientRect();
-        const x = ((e.clientX - rect.left) / rect.width) * 100;
-        const y = ((e.clientY - rect.top) / rect.height) * 100;
-        e.target.style.setProperty('--glow-x', `${x}%`);
-        e.target.style.setProperty('--glow-y', `${y}%`);
-    });
-    
-    btn.addEventListener('mouseleave',function () {
-        btn.style.setProperty('--glow-x', '50%');
-        btn.style.setProperty('--glow-y', '50%');
-    });
-});
+}
 
-document.querySelectorAll(`.reset-score`).forEach(function (btn) {
-    btn.addEventListener('mousemove', function (e) {
-        const rect = e.target.getBoundingClientRect();
-        const x = ((e.clientX - rect.left) / rect.width) * 100;
-        const y = ((e.clientY - rect.top) / rect.height) * 100;
-        e.target.style.setProperty('--glow-x', `${x}%`);
-        e.target.style.setProperty('--glow-y', `${y}%`);
-    });
-    
-    btn.addEventListener('mouseleave',function () {
-        btn.style.setProperty('--glow-x', '50%');
-        btn.style.setProperty('--glow-y', '50%');
-    });
-});
+// Chamada para múltiplos seletores
+['.add-players', '.reset-btn', '.new-player', '.reset-score'].forEach(applyGlowEffect);
 
 // ==============================================
 // 1. SELEÇÃO DE ELEMENTOS E VARIÁVEIS GLOBAIS
@@ -71,7 +32,7 @@ const nameO = document.querySelector('.player-two');
 const scorePlayerX = document.querySelector('.score-player-one'); // Pegando os score de pontuação
 const scorePlayerO = document.querySelector('.score-player-two');
 const cells = document.querySelectorAll('.cell'); // Pegamos todas as celulas do tabuleiro
-const display = document.querySelector('.display'); // Onde iremos exibir a mensagem
+const display = document.querySelector('.display-text'); // Onde iremos exibir a mensagem
 const resetBtn = document.getElementById('reset-game-btn');
 
 // Configurações do jogo
@@ -172,7 +133,8 @@ function checkResult() {
     /* Aqui atualizamos o display para exibir o jogador vencedor, veridicamos a condição no inicio que determina o ganhador, caso haja algum o display
     atualiza o score chamando a função com o nome do jogador e jogo e parado */
     if (roundWon) {
-        display.textContent = `Jogador ${currentPlayer} venceu!`;
+        displayText.textContent = `Jogador ${currentPlayer} venceu!`;
+        displayContainer.classList.add('winner');
         updateScore(currentPlayer);
         gameActive = false;
         return;
@@ -180,8 +142,8 @@ function checkResult() {
     
     /* Função para verificar se há empate, a função verifica se há alguma celula vazia no gameState, caso tenha, atualiza o display e para o jogo */
     if (!gameState.includes('')) {
-        display.textContent = 'Empate!';
-        display.classList.add('winner-display'); // Ou outra classe de animação
+        displayText.textContent = 'Empate!';
+        displayContainer.classList.add('winner');
         gameActive = false;
         return;
     }
@@ -216,29 +178,21 @@ function updateScore(winner) {
 function resetGame() {
     cells.forEach(function (cell) {
         cell.classList.remove('winning-cell');
-        cell.style.zIndex = '';
+        cell.removeAttribute('data-value');
+        const content = cell.querySelector('.cell-content');
+        if (content) content.textContent = '';
     });
 
+    displayContainer.classList.remove('winner');
     initializeGame();
 }
 
 // Nova função para animar o display
 function animateWinnerDisplay(winner) {
-    const display = document.querySelector('.display');
-    
-    // Limpa classes anteriores
-    display.classList.remove('winner-display', 'winner-display-gold', 'text-pop');
-    
-    // Adiciona a animação
-    display.classList.add('winner-display'); // Escolha a classe de animação preferida
-    
-    // Efeito adicional de pop
-    display.style.animation = 'textPop 0.5s ease-out forwards';
-    
-    // Remove a animação após completar para poder reutilizar
-    setTimeout(() => {
-        display.style.animation = '';
-    }, 500);
+    display.classList.remove('text-pop');
+    void display.offsetWidth; // forçar reflow
+    display.classList.add('text-pop');
+
 }
 
 /* Aqui esta a função para adicionar uma cor as celulas do ganhador
@@ -248,7 +202,6 @@ function animateWinnerDisplay(winner) {
 function highlightWinningCells (cellsIndexes) {
     cellsIndexes.forEach(function (index) {
         cells[index].classList.add('winning-cell');
-        cells[index].style.zIndex = '1';
     });
 }
 
