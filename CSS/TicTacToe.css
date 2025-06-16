@@ -393,7 +393,6 @@ h1 {
     text-shadow: 0 0px 5px rgba(48, 12, 4, 0.3), 0 0 5px rgba(255, 238, 0, 0.774);
 }
 
-
 .game-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -410,50 +409,34 @@ h1 {
     display: grid;
     place-content: center;
     font-weight: bold;
-    color: rgb(255, 0, 242);
-}
-
-/* Substitua as classes por */
-.cell[data-value="X"] {
+    color: rgb(254, 255, 169);
+    -webkit-text-stroke: 2px rgb(251, 255, 0);
+    text-shadow: 0 1px 10px rgba(255, 230, 0, 0.87), 0 2px 15px rgb(251, 255, 0);
     font-weight: bold;
     font-size: 4rem;
-    color: transparent;
-    background: radial-gradient(circle at center, 
-            rgba(255, 0, 0, 0.9), 
-            rgba(255, 119, 0, 0.9), 
-            rgba(255, 221, 0, 0.9));
-    background-clip: text;
-    -webkit-background-clip: text;
-    background-size: 150% 150%;
-    position: relative; /* Adicionado para z-index funcionar */
-    z-index: 1; /* Coloca o texto acima do fundo */
-}
-
-.cell[data-value="O"] {
-    font-weight: bold;
-    font-size: 4rem;
-    color: transparent;
-    background: radial-gradient(circle at center, 
-            rgba(0, 255, 234, 0.9), 
-            rgba(0, 38, 255, 0.9),
-            rgba(255, 0, 234, 0.9));
-    background-clip: text;
-    -webkit-background-clip: text;
-    background-size: 150% 150%;
-    position: relative; /* Adicionado para z-index funcionar */
-    z-index: 1; /* Coloca o texto acima do fundo */
+    z-index: 5;
 }
 
 .winning-cell {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(76, 175, 80, 0.3) !important;
-    animation: winAnimation 1s ease-in-out;
-    z-index: 0;
+    font-weight: bold;
+    font-size: 4rem;
+    color: transparent;
+    background: radial-gradient(circle at center, green, black);
+    position: relative;
+    animation: winAnimation 3s infinite, pulseBackground 4s ease-in-out infinite;
+    z-index: -1;
+}
+
+@keyframes pulseBackground {
+  0% {
+    background: radial-gradient(circle at center, green 0%, black 80%);
+  }
+  50% {
+    background: radial-gradient(circle at center, green 40%, black 100%);
+  }
+  100% {
+    background: radial-gradient(circle at center, green 0%, black 80%);
+  }
 }
 
 @keyframes winAnimation {
@@ -461,7 +444,6 @@ h1 {
     50% { transform: scale(1.1); }
     100% { transform: scale(1); }
 }
-
 
 .cell::after {
     content: '';

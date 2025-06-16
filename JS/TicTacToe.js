@@ -133,8 +133,7 @@ function checkResult() {
     /* Aqui atualizamos o display para exibir o jogador vencedor, veridicamos a condição no inicio que determina o ganhador, caso haja algum o display
     atualiza o score chamando a função com o nome do jogador e jogo e parado */
     if (roundWon) {
-        displayText.textContent = `Jogador ${currentPlayer} venceu!`;
-        displayContainer.classList.add('winner');
+        display.textContent = `Jogador ${currentPlayer} venceu!`;
         updateScore(currentPlayer);
         gameActive = false;
         return;
@@ -142,8 +141,8 @@ function checkResult() {
     
     /* Função para verificar se há empate, a função verifica se há alguma celula vazia no gameState, caso tenha, atualiza o display e para o jogo */
     if (!gameState.includes('')) {
-        displayText.textContent = 'Empate!';
-        displayContainer.classList.add('winner');
+        display.textContent = 'Empate!';
+        display.classList.add('winner-display'); // Ou outra classe de animação
         gameActive = false;
         return;
     }
@@ -178,21 +177,33 @@ function updateScore(winner) {
 function resetGame() {
     cells.forEach(function (cell) {
         cell.classList.remove('winning-cell');
-        cell.removeAttribute('data-value');
-        const content = cell.querySelector('.cell-content');
-        if (content) content.textContent = '';
+        cell.style.zIndex = '';
     });
 
-    displayContainer.classList.remove('winner');
     initializeGame();
 }
 
 // Nova função para animar o display
 function animateWinnerDisplay(winner) {
-    display.classList.remove('text-pop');
-    void display.offsetWidth; // forçar reflow
-    display.classList.add('text-pop');
-
+    const display = document.querySelector('.display');
+    
+    // Limpa classes anteriores
+    display.classList.remove('winner-display', 'winner-display-gold', 'text-pop');
+    
+    // Adiciona o efeito correto
+    if (winner === 'X') {
+        display.classList.add('winner-display-gold'); // Dourado para X
+    } else {
+        display.classList.add('winner-display'); // RGB para O
+    }
+    
+    // Efeito adicional de pop
+    display.style.animation = 'textPop 0.5s ease-out forwards';
+    
+    // Remove a animação após completar para poder reutilizar
+    setTimeout(() => {
+        display.style.animation = '';
+    }, 500);
 }
 
 /* Aqui esta a função para adicionar uma cor as celulas do ganhador
@@ -202,6 +213,7 @@ function animateWinnerDisplay(winner) {
 function highlightWinningCells (cellsIndexes) {
     cellsIndexes.forEach(function (index) {
         cells[index].classList.add('winning-cell');
+        cells[index].style.zIndex = '1';
     });
 }
 
