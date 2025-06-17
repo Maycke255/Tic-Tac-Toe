@@ -421,22 +421,17 @@ h1 {
     font-weight: bold;
     font-size: 4rem;
     color: transparent;
-    background: radial-gradient(circle at center, green, black);
-    position: relative;
-    animation: winAnimation 3s infinite, pulseBackground 4s ease-in-out infinite;
+    background: linear-gradient(45deg, rgb(112, 224, 112), rgb(50, 239, 26), rgb(0, 128, 0), rgb(0, 69, 0), rgb(112, 224, 112));
+    background-size: 300% 300%;
+    animation: winAnimation 3s infinite, pulseMove 6s linear infinite;
     z-index: -1;
 }
 
-@keyframes pulseBackground {
-  0% {
-    background: radial-gradient(circle at center, green 0%, black 80%);
-  }
-  50% {
-    background: radial-gradient(circle at center, green 40%, black 100%);
-  }
-  100% {
-    background: radial-gradient(circle at center, green 0%, black 80%);
-  }
+
+@keyframes pulseMove {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
 }
 
 @keyframes winAnimation {

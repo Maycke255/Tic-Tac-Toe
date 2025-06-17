@@ -124,7 +124,6 @@ function checkResult() {
             roundWon = true;
             highlightWinningCells(winConditions[i]);
             animateWinnerDisplay(currentPlayer); // Nova função
-            updateScore(currentPlayer);
             gameActive = false;
             break;
         }
