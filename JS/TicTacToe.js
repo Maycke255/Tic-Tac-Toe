@@ -33,6 +33,7 @@ const scorePlayerX = document.querySelector('.score-player-one'); // Pegando os 
 const scorePlayerO = document.querySelector('.score-player-two');
 const cells = document.querySelectorAll('.cell'); // Pegamos todas as celulas do tabuleiro
 const display = document.querySelector('.display-text'); // Onde iremos exibir a mensagem
+const displayContainer = document.querySelector(`.display-container`);
 const resetBtn = document.getElementById('reset-game-btn');
 
 // Configurações do jogo
@@ -57,6 +58,8 @@ function initializeGame() {
     gameState = ['', '', '', '', '', '', '', '', ''];
     currentPlayer = 'X';
     gameActive = true;
+
+    displayContainer.classList.remove('display-winner');
     
     // Limpa o tabuleiro visualmente, tiramos a classe do ganhador e tiramos tudo
     cells.forEach(function (cell) {
@@ -123,7 +126,6 @@ function checkResult() {
             Adiciona a classe winning-cell às células 0, 1 e 2 */
             roundWon = true;
             highlightWinningCells(winConditions[i]);
-            animateWinnerDisplay(currentPlayer); // Nova função
             gameActive = false;
             break;
         }
@@ -132,7 +134,8 @@ function checkResult() {
     /* Aqui atualizamos o display para exibir o jogador vencedor, veridicamos a condição no inicio que determina o ganhador, caso haja algum o display
     atualiza o score chamando a função com o nome do jogador e jogo e parado */
     if (roundWon) {
-        display.textContent = `Jogador ${currentPlayer} venceu!`;
+        display.textContent = `Jogador ${currentPlayer}  venceu!`;
+        displayContainer.classList.add('display-winner');
         updateScore(currentPlayer);
         gameActive = false;
         return;
@@ -141,7 +144,7 @@ function checkResult() {
     /* Função para verificar se há empate, a função verifica se há alguma celula vazia no gameState, caso tenha, atualiza o display e para o jogo */
     if (!gameState.includes('')) {
         display.textContent = 'Empate!';
-        display.classList.add('winner-display'); // Ou outra classe de animação
+        displayContainer.classList.add('display-winner'); // Ou outra classe de animação
         gameActive = false;
         return;
     }
@@ -155,10 +158,10 @@ function checkResult() {
 
 function updateDisplay() {
     // Verifica se os nomes dos jogadores foram definidos
-    if (nameX.value && nameO.value) {
+    if (playerXName.value && playerOName.value) {
         /* Ao mesmo tempo que atribui uma variavel, verifica qual e o jogador da vez, caso X, recebe o nome do jogador X, caso seja false, caso não seja a
         vez do jogador X recebe a vez do jogador O. */
-        const playerName = currentPlayer === 'X' ? nameX.value : nameO.value;
+        const playerName = currentPlayer === 'X' ? playerXName.value : playerOName.value;
         display.textContent = `Vez de ${playerName} (${currentPlayer})`;
     } else {
         // Caso contrario mostra apenas o simbolo
@@ -179,30 +182,9 @@ function resetGame() {
         cell.style.zIndex = '';
     });
 
-    initializeGame();
-}
+    displayContainer.classList.remove('display-winner');
 
-// Nova função para animar o display
-function animateWinnerDisplay(winner) {
-    const display = document.querySelector('.display');
-    
-    // Limpa classes anteriores
-    display.classList.remove('winner-display', 'winner-display-gold', 'text-pop');
-    
-    // Adiciona o efeito correto
-    if (winner === 'X') {
-        display.classList.add('winner-display-gold'); // Dourado para X
-    } else {
-        display.classList.add('winner-display'); // RGB para O
-    }
-    
-    // Efeito adicional de pop
-    display.style.animation = 'textPop 0.5s ease-out forwards';
-    
-    // Remove a animação após completar para poder reutilizar
-    setTimeout(() => {
-        display.style.animation = '';
-    }, 500);
+    initializeGame();
 }
 
 /* Aqui esta a função para adicionar uma cor as celulas do ganhador

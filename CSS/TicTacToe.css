@@ -353,8 +353,10 @@ h1 {
 
 .display-container {
     margin: 2rem;
-    padding: 1rem;
+    padding: 2rem;
     position: relative;
+    border-radius: 2rem;
+    background: transparent;
 }
 
 .display-text {
@@ -368,29 +370,26 @@ h1 {
     color: transparent;
 }
 
-.display-container.winner .display-text {
-    animation: textPop 0.5s ease infinite;
-}
-
-@keyframes winPulse {
-    0%, 100% { opacity: 0.7; }
-    50% { opacity: 1; }
+.display-winner {
+    font-size: 2rem;
+    font-weight: bold;
+    position: relative;
+    z-index: 2;
+    background: linear-gradient(to right, 
+        rgb(112, 224, 112), rgb(50, 239, 26),
+        rgb(0, 128, 0), rgb(0, 69, 0), 
+        rgb(0, 128, 0), rgb(50, 239, 26), 
+        rgb(112, 224, 112));
+    background-size: 200% auto; /* <- ESSENCIAL */
+    background-position: 0% 50%; /* <- Ponto inicial */
+    box-shadow: 0 2px 16px rgb(112, 224, 112);
+    animation: textPop 3s infinite, pulseMove 6s linear infinite;
 }
 
 @keyframes textPop {
-    0%, 100% { transform: scale(1); }
+    0% { transform: scale(1); }
     50% { transform: scale(1.1); }
-}
-
-.text {
-    font-size: 2rem;
-    font-family: var(--font-tertiary);
-    font-weight: 700;
-    background:  linear-gradient(to right, var(--color-red), var(--color-orange));
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    text-shadow: 0 0px 5px rgba(48, 12, 4, 0.3), 0 0 5px rgba(255, 238, 0, 0.774);
+    100% { transform: scale(1); }
 }
 
 .game-grid {
