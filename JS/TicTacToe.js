@@ -92,6 +92,10 @@ function handleCellClick(e) {
     checkResult();
 }
 
+function getPlayerName(symbol) {
+    return symbol === 'X' ? playerXName.value || 'Jogador X' : playerOName.value || 'Jogador O';
+}
+
 function checkResult() {
     let roundWon = false;
     
@@ -134,7 +138,14 @@ function checkResult() {
     /* Aqui atualizamos o display para exibir o jogador vencedor, veridicamos a condição no inicio que determina o ganhador, caso haja algum o display
     atualiza o score chamando a função com o nome do jogador e jogo e parado */
     if (roundWon) {
-        display.textContent = `Jogador ${currentPlayer}  venceu!`;
+        // Pegando nomes dos jogadores separadamente
+        xName = nameX.value;
+        oName = nameO.value;
+        
+        //
+        const playerName = currentPlayer === 'X' ? xName : oName;
+
+        display.textContent = `Jogador ${currentPlayer} (${playerName}) venceu!`;
         displayContainer.classList.add('display-winner');
         updateScore(currentPlayer);
         gameActive = false;
@@ -156,12 +167,12 @@ function checkResult() {
     updateDisplay();
 }
 
-function updateDisplay() {
+function updateDisplay(xName = nameX.value, oName = nameO.value) {
     // Verifica se os nomes dos jogadores foram definidos
-    if (playerXName.value && playerOName.value) {
+    if (xName && oName) {
         /* Ao mesmo tempo que atribui uma variavel, verifica qual e o jogador da vez, caso X, recebe o nome do jogador X, caso seja false, caso não seja a
         vez do jogador X recebe a vez do jogador O. */
-        const playerName = currentPlayer === 'X' ? playerXName.value : playerOName.value;
+        const playerName = currentPlayer === 'X' ? xName : oName;
         display.textContent = `Vez de ${playerName} (${currentPlayer})`;
     } else {
         // Caso contrario mostra apenas o simbolo
@@ -215,13 +226,19 @@ function addPlayers() {
         return;
     }
 
-    nameX.value = playerXName.value;
-    nameO.value = playerOName.value;
+    // Guarda os nomes antes de apagar
+    const playerX = playerXName.value;
+    const playerO = playerOName.value;
 
+    nameX.value = playerX;
+    nameO.value = playerO;
+
+    // Agora você limpa os campos de input
     playerXName.value = '';
     playerOName.value = '';
-    
-    updateDisplay();
+
+    // Atualiza o display usando os valores guardados
+    updateDisplay(playerX, playerO);
 }
 
 function resetScoreboard() {
